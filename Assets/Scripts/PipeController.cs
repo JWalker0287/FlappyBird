@@ -13,7 +13,10 @@ public class PipeController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.gameState != GameState.Playing) return;
+
         transform.position += Vector3.left * speed * Time.deltaTime;
+
         Vector3 view = gameCam.WorldToViewportPoint(transform.position);
         if (view.x < -0.1f) 
         {

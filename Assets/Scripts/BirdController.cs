@@ -14,11 +14,15 @@ public class BirdController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (GameManager.gameState != GameState.Ended&&Input.GetButtonDown("Jump"))
         {
             float jumpSpeed = Mathf.Sqrt(2 * jumpHeight * -Physics.gravity.y);
             body.velocity = Vector2.up * jumpSpeed;
         }
         transform.right = new Vector3(1, body.velocity.y, 0);
+    }
+    void OnCollisionEnter()
+    {
+        GameManager.EndGame();
     }
 }
