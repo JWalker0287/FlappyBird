@@ -6,8 +6,10 @@ public class PipeController : MonoBehaviour
 {
     public float speed = 10;
     Camera gameCam;
+    AudioSource sfx;
     void Start()
     {
+        sfx = GetComponent<AudioSource>();
         gameCam = Camera.main;
     }
 
@@ -24,5 +26,13 @@ public class PipeController : MonoBehaviour
             view.x = 1.1f;
         }
         transform.position = gameCam.ViewportToWorldPoint(view);
+    }
+    void OnTriggerExit(Collider c)
+    {
+        if (c.CompareTag("Player"))
+        {
+            sfx.Play();
+            GameManager.AddPoint();
+        }
     }
 }

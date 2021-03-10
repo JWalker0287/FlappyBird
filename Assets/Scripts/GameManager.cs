@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -12,12 +13,16 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     public float gravity = -25;
+    public static int points = 0;
     public static GameState gameState = GameState.Waiting;
     public GameObject menu;
+    public Text scoreText;
 
     void Start ()
     {
         Physics.gravity = Vector3.zero;
+        points = 0;
+        scoreText.text = points.ToString();
     }
     void Update()
     {
@@ -33,6 +38,12 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("FlappyBird");
         }
 
+        scoreText.text = points.ToString();
+    }
+    public static void AddPoint()
+    {
+        points ++;
+        Debug.Log(points);
     }
     public static void EndGame()
     {
