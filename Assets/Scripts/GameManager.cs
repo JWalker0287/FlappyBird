@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
 {
     public float gravity = -25;
     public static GameManager instance;
-    public static int points = 0;
+    public int points = 0;
     public static GameState gameState = GameState.Waiting;
     public GameObject menu;
     public Text scoreText;
+    public  Text highScoreText;
     public Animator background1;
     public Animator background2;
 
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         Physics.gravity = Vector3.zero;
         points = 0;
-        scoreText.text = points.ToString();
+        UpdateScore();
     }
     void Update()
     {
@@ -44,15 +45,26 @@ public class GameManager : MonoBehaviour
 
         scoreText.text = points.ToString();
     }
-    public static void AddPoint()
-    {
-        points ++;
-        Debug.Log(points);
-    }
     public static void EndGame()
     {
         gameState = GameState.Ended;
         instance.background1.speed = 0;
         instance.background2.speed = 0;
+    }
+    public static void AddPoint()
+    {
+        instance.points ++;
+        instance.UpdateScore();
+    }
+    void UpdateScore ()
+    {
+        scoreText.text = points.ToString();
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (points > highScore)
+        {
+            highScore = points;
+            PlayerPrefs.SetInt("HighScore", highScore);
+        }
+        highScoreText.text = ("HIGHSCORE: " + highScore.ToString());
     }
 }
