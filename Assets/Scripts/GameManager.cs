@@ -13,13 +13,17 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     public float gravity = -25;
+    public static GameManager instance;
     public static int points = 0;
     public static GameState gameState = GameState.Waiting;
     public GameObject menu;
     public Text scoreText;
+    public Animator background1;
+    public Animator background2;
 
     void Start ()
     {
+        instance = this;
         Physics.gravity = Vector3.zero;
         points = 0;
         scoreText.text = points.ToString();
@@ -48,5 +52,7 @@ public class GameManager : MonoBehaviour
     public static void EndGame()
     {
         gameState = GameState.Ended;
+        instance.background1.speed = 0;
+        instance.background2.speed = 0;
     }
 }
